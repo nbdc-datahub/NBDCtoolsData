@@ -1,0 +1,26 @@
+Package: NBDCtoolsData
+Title: NBDCtoolsData: NBDC Data Hub Tools (Data Package)
+Description: This package provides data elements for the NBDCtools package.
+  Data Hub.
+URL: https://software.nbdc-datahub.org/NBDCtoolsData/
+Version: 1.0.0
+Authors@R: c(
+  person(given = "Janosch",
+         family = "Linkersdoerfer",
+         email = "dairc.service@gmail.com",
+         role = c("aut", "cre"),
+         comment = c(ORCID = "0000-0002-1577-1233")),
+  person(given = "Le",
+       family = "Zhang",
+       email = "lezhang100@gmail.com",
+       role = c("aut"),
+       comment = c(ORCID = "0009-0008-0205-2150"))) 
+Depends:
+  R (>= 4.3.0)
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+Config/Needs/website: rmarkdown
+LazyData: true

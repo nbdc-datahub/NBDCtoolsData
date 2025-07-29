@@ -1,0 +1,16 @@
+url: https://software.nbdc-datahub.org/NBDCtoolsData/
+repo:
+  url:
+    home: https://github.com/nbdc-datahub/NBDCtoolsData/
+    source: https://github.com/nbdc-datahub/NBDCtoolsData/blob/main/
+    issue: https://github.com/nbdc-datahub/NBDCtoolsData/issues/
+template:
+  bootstrap: 5
+  light-switch: true
+
+
+reference:
+- title: "Data in the package"
+  desc: Metadata included in the package.
+  contents:
+  - matches("^lst_")
