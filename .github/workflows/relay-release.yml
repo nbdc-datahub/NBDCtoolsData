@@ -1,0 +1,69 @@
+name: Relay NBDC Release to ReproSchema
+
+on:
+  release:
+    types: [released]
+
+permissions:
+  contents: read
+
+jobs:
+  relay:
+    if: github.repository == 'nbdc-datahub/NBDCtoolsData'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Validate version format
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Release versions are typically x.x or x.x.x format
+          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+            echo "Error: Invalid version format: $VERSION"
+            echo "Expected format: x.x or x.x.x (e.g., 6.0, 6.1.0)"
+            exit 1
+          fi
+          echo "Valid version format: $VERSION"
+
+      - name: Generate GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NBDC_CHECK_APP_ID }}
+          private-key: ${{ secrets.NBDC_CHECK_APP_PRIVATE_KEY }}
+
+      - name: Trigger ABCD-ReproSchema workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.app_token.outputs.token }}
+          repository: ReproNim/ABCD-ReproSchema
+          event-type: nbdc-release
+          client-payload: |
+            {
+              "release": "${{ steps.version.outputs.version }}",
+              "create_tag": true,
+              "source_repo": "${{ github.repository }}",
+              "release_url": "${{ github.event.release.html_url }}",
+              "triggered_by": "${{ github.actor }}"
+            }
+
+      - name: Trigger HBCD-ReproSchema workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.app_token.outputs.token }}
+          repository: ReproNim/HBCD-ReproSchema
+          event-type: nbdc-release
+          client-payload: |
+            {
+              "release": "${{ steps.version.outputs.version }}",
+              "create_tag": true,
+              "source_repo": "${{ github.repository }}",
+              "release_url": "${{ github.event.release.html_url }}",
+              "triggered_by": "${{ github.actor }}"
+            }
