@@ -3,6 +3,12 @@ name: Relay NBDC Release to ReproSchema
 on:
   release:
     types: [released]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to relay (e.g., 4.0.0)'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -15,7 +21,12 @@ jobs:
       - name: Extract version and determine target
         id: version
         run: |
-          VERSION="${{ github.ref_name }}"
+          # Use manual input or release tag
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${{ github.ref_name }}"
+          fi
           VERSION="${VERSION#v}"
 
           # Validate version format (must be x.x.x)
@@ -69,7 +80,7 @@ jobs:
               "release": "${{ steps.version.outputs.target_version }}",
               "create_tag": true,
               "source_repo": "${{ github.repository }}",
-              "release_url": "${{ github.event.release.html_url }}",
+              "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
             }
 
@@ -85,6 +96,6 @@ jobs:
               "release": "${{ steps.version.outputs.target_version }}",
               "create_tag": true,
               "source_repo": "${{ github.repository }}",
-              "release_url": "${{ github.event.release.html_url }}",
+              "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
             }
