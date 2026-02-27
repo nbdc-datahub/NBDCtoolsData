@@ -4,11 +4,6 @@ on:
   release:
     types: [released]
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to relay (e.g., 4.0.0)'
-        required: true
-        type: string
 
 permissions:
   contents: read
