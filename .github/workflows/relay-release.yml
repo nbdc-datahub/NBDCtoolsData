@@ -19,24 +19,18 @@ jobs:
     steps:
       - name: Extract version from DESCRIPTION
         id: version
+        shell: bash
         run: |
-          # Check if DESCRIPTION file exists
           if [ ! -f DESCRIPTION ]; then
             echo "Error: DESCRIPTION file not found"
             exit 1
           fi
-
-          # Extract version from DESCRIPTION file using more robust method
           VERSION=$(grep '^Version:' DESCRIPTION | head -1 | awk '{print $2}')
-
-          # Verify version was extracted
           if [ -z "$VERSION" ]; then
             echo "Error: Could not extract version from DESCRIPTION"
             exit 1
           fi
-
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Extracted version: $VERSION"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Generate GitHub App token
         id: app_token
