@@ -17,21 +17,6 @@ jobs:
       github.repository == 'yibeichan/NBDCtoolsData'
     runs-on: ubuntu-latest
     steps:
-      - name: Extract version from DESCRIPTION
-        id: version
-        shell: bash
-        run: |
-          if [ ! -f DESCRIPTION ]; then
-            echo "Error: DESCRIPTION file not found"
-            exit 1
-          fi
-          VERSION=$(grep '^Version:' DESCRIPTION | head -1 | awk '{print $2}')
-          if [ -z "$VERSION" ]; then
-            echo "Error: Could not extract version from DESCRIPTION"
-            exit 1
-          fi
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
-
       - name: Generate GitHub App token
         id: app_token
         uses: actions/create-github-app-token@v1
@@ -51,8 +36,6 @@ jobs:
           event-type: nbdc-release
           client-payload: |
             {
-              "release": "${{ steps.version.outputs.version }}",
-              "create_tag": true,
               "source_repo": "${{ github.repository }}",
               "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
@@ -66,8 +49,6 @@ jobs:
           event-type: nbdc-release
           client-payload: |
             {
-              "release": "${{ steps.version.outputs.version }}",
-              "create_tag": true,
               "source_repo": "${{ github.repository }}",
               "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
