@@ -11,7 +11,10 @@ permissions:
 
 jobs:
   relay:
-    if: github.repository == 'nbdc-datahub/NBDCtoolsData'
+    # Allow nbdc-datahub or yibeichan fork to run
+    if: |
+      github.repository == 'nbdc-datahub/NBDCtoolsData' ||
+      github.repository == 'yibeichan/NBDCtoolsData'
     runs-on: ubuntu-latest
     steps:
       - name: Extract version from DESCRIPTION
