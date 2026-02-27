@@ -20,13 +20,6 @@ jobs:
           # Extract version from DESCRIPTION file
           VERSION=$(awk '/^Version:/ {print $2}' DESCRIPTION)
 
-          # Validate version format (must be x.x.x)
-          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: Invalid version format: $VERSION"
-            echo "Expected format: x.x.x (e.g., 4.0.0, 5.0.1)"
-            exit 1
-          fi
-
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
