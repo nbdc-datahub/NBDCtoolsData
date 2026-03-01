@@ -7,33 +7,16 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   relay:
-    if: github.repository == 'nbdc-datahub/NBDCtoolsData'
+    # Allow nbdc-datahub or yibeichan fork to run
+    if: |
+      github.repository == 'nbdc-datahub/NBDCtoolsData' ||
+      github.repository == 'yibeichan/NBDCtoolsData'
     runs-on: ubuntu-latest
     steps:
-      - name: Extract version
-        id: version
-        run: |
-          # Use manual input or release tag
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
-          else
-            VERSION="${{ github.ref_name }}"
-          fi
-          VERSION="${VERSION#v}"
-
-          # Validate version format (must be x.x.x)
-          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: Invalid version format: $VERSION"
-            echo "Expected format: x.x.x (e.g., 4.0.0, 5.0.1)"
-            exit 1
-          fi
-
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Extracted version: $VERSION"
-
       - name: Generate GitHub App token
         id: app_token
         uses: actions/create-github-app-token@v1
@@ -53,8 +36,6 @@ jobs:
           event-type: nbdc-release
           client-payload: |
             {
-              "release": "${{ steps.version.outputs.version }}",
-              "create_tag": true,
               "source_repo": "${{ github.repository }}",
               "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
@@ -68,8 +49,6 @@ jobs:
           event-type: nbdc-release
           client-payload: |
             {
-              "release": "${{ steps.version.outputs.version }}",
-              "create_tag": true,
               "source_repo": "${{ github.repository }}",
               "release_url": "${{ github.event.release.html_url || '' }}",
               "triggered_by": "${{ github.actor }}"
