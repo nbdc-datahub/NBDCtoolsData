@@ -14,13 +14,13 @@ Source:
 [`DESCRIPTION`](https://github.com/nbdc-datahub/NBDCtoolsData/blob/main/DESCRIPTION)
 
 Zhang L, Linkersdoerfer J (2026). *NBDCtoolsData: NBDCtoolsData: NBDC
-Data Hub Tools (Data Package)*. R package version 4.0.1,
+Data Hub Tools (Data Package)*. R package version 4.0.2,
 <https://software.nbdc-datahub.org/NBDCtoolsData/>.
 
     @Manual{,
       title = {NBDCtoolsData: NBDCtoolsData: NBDC Data Hub Tools (Data Package)},
       author = {Le Zhang and Janosch Linkersdoerfer},
       year = {2026},
-      note = {R package version 4.0.1},
+      note = {R package version 4.0.2},
       url = {https://software.nbdc-datahub.org/NBDCtoolsData/},
     }
