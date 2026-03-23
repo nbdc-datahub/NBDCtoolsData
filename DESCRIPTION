@@ -3,7 +3,7 @@ Title: NBDCtoolsData: NBDC Data Hub Tools (Data Package)
 Description: This package provides data elements for the NBDCtools package.
   Data Hub.
 URL: https://software.nbdc-datahub.org/NBDCtoolsData/
-Version: 4.0.2
+Version: 4.0.3
 Authors@R: c(
     person(given = "Le",
        family = "Zhang",
@@ -25,3 +25,4 @@ RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 Config/Needs/website: rmarkdown
 LazyData: true
+LazyDataCompression:xz
