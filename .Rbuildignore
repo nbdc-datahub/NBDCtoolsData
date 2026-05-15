@@ -7,9 +7,11 @@
 ^\.Rhistory$
 ^\.Rprofile$
 ^\.Rproj\.user$
+^\.claude$
 ^\.git$
 ^\.github$
 ^\.gitignore$
+^\.positai$
 ^\.pre-commit-config\.yaml$
 ^\.renvignore$
 ^_pkgdown\.yml$
