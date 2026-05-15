@@ -9,6 +9,7 @@ package](https://github.com/nbdc-datahub/NBDCtools).
 To install `NBDCtoolsData`, use the following command:
 
 ``` r
+
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
@@ -21,6 +22,7 @@ To install a *specific release* of the package, specify the tag in the
 use:
 
 ``` r
+
 remotes::install_github("nbdc-datahub/NBDCtoolsData@1.0.0")
 ```
 
